@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Header } from '@/components/layout/header';
 import { FilterBar } from '@/components/dashboard/filter-bar';
 import { CandidatesTable } from '@/components/dashboard/candidates-table';
+import type { Candidate as TableCandidate } from '@/components/dashboard/candidates-table';
 import { CandidateModal } from '@/components/dashboard/candidate-modal';
 import { Pagination } from '@/components/dashboard/pagination';
 import { useCandidates, useCandidate } from '@/hooks/use-candidates';
@@ -29,7 +30,7 @@ export default function DashboardPage() {
   const [whatsappPhoneFilter, setWhatsappPhoneFilter] = useState('');
   const [page, setPage] = useState(1);
   const [selectedCandidateId, setSelectedCandidateId] = useState<string | null>(null);
-  const [selectedCandidateFromList, setSelectedCandidateFromList] = useState<Record<string, unknown> | null>(null);
+  const [selectedCandidateFromList, setSelectedCandidateFromList] = useState<TableCandidate | null>(null);
   const [scrollToCandidateId, setScrollToCandidateId] = useState<string | null>(null);
 
   const { data, isLoading, refetch } = useCandidates({
@@ -123,8 +124,8 @@ export default function DashboardPage() {
     setWhatsappPhoneInput('');
   }, [whatsappPhoneInput]);
 
-  const handleAction = useCallback((candidate: Record<string, unknown>) => {
-    setSelectedCandidateId(candidate.id as string);
+  const handleAction = useCallback((candidate: TableCandidate) => {
+    setSelectedCandidateId(candidate.id);
     setSelectedCandidateFromList(candidate);
   }, []);
 

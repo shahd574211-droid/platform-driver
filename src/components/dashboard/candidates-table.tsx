@@ -13,7 +13,7 @@ interface CallFeedbackItem {
   callStatus?: string;
 }
 
-interface Candidate {
+export interface Candidate {
   id: string;
   whatsappPhoneNumber: string;
   captainNumber: string | null;
