@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 214 100% 55%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 214 100% 55%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Ant Design inspired styles */
+@layer components {
+  .ant-card {
+    @apply bg-white rounded-lg shadow-ant border border-gray-100;
+  }
+  
+  .ant-btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
+  }
+  
+  .ant-btn-primary {
+    @apply bg-primary text-white hover:bg-primary-600;
+  }
+  
+  .ant-btn-default {
+    @apply bg-white border border-gray-300 hover:border-primary hover:text-primary;
+  }
+  
+  .ant-table {
+    @apply w-full text-sm;
+  }
+  
+  .ant-table th {
+    @apply bg-gray-50 px-4 py-3 text-left font-medium text-gray-600 border-b border-gray-200;
+  }
+  
+  .ant-table td {
+    @apply px-4 py-3 border-b border-gray-100;
+  }
+  
+  .ant-table tr:hover td {
+    @apply bg-gray-50;
+  }
+  
+  .ant-tag {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border;
+  }
+  
+  .ant-input {
+    @apply w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
+  }
+  
+  .ant-select {
+    @apply rounded-md border border-gray-300 bg-white text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

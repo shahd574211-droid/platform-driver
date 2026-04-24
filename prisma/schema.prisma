@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CandidateStatus {
+  PENDING
+  COMPLETED
+  REJECTED
+  CALL_BACK
+}
+
+enum CallStatus {
+  ANSWERED
+  NO_ANSWER
+  BUSY
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  avatar    String?
+  role      String   @default("agent")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Candidate {
+  id                  String          @id @default(cuid())
+  whatsappPhoneNumber String          @map("whatsapp_phone_number")
+  captainNumber       String?         @map("captain_number")
+  cityName            String          @map("city_name")
+  status              CandidateStatus @default(PENDING)
+  
+  // Media URLs
+  nidFrontUrl         String?         @map("nid_front_url")
+  nidBackUrl          String?         @map("nid_back_url")
+  driverLicenseUrl    String?         @map("driver_license_url")
+  selfieUrl           String?         @map("selfie_url")
+  verificationVideoUrl String?        @map("verification_video_url")
+  
+  // Car information
+  carStatus           String?         @map("car_status")
+  carModel            String?         @map("car_model")
+  carYear             String?         @map("car_year")
+  
+  // Agent tracking
+  currentlyViewingBy  String?         @map("currently_viewing_by")
+  assignedTo          String?         @map("assigned_to")
+  
+  // Timestamps
+  createdAt           DateTime        @default(now()) @map("created_at")
+  updatedAt           DateTime        @updatedAt @map("updated_at")
+  
+  // Relations
+  callFeedbacks       CallFeedback[]
+
+  @@index([whatsappPhoneNumber])
+  @@index([captainNumber])
+  @@index([cityName])
+  @@index([status])
+  @@index([currentlyViewingBy])
+  @@map("candidates")
+}
+
+model CallFeedback {
+  id             String     @id @default(cuid())
+  candidateId    String     @map("candidate_id")
+  agentEmail     String     @map("agent_email")
+  callStatus     CallStatus @map("call_status")
+  feedbackStatus String?    @map("feedback_status") // WILL_JOIN_US | NOT_INTERESTED | HE_IS_CAPTAIN
+  note           String?
+  createdAt      DateTime   @default(now()) @map("created_at")
+  
+  // Relations
+  candidate      Candidate  @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([agentEmail])
+  @@map("call_feedbacks")
+}
